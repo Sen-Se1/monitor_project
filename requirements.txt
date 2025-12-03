@@ -1,0 +1,6 @@
+# System Monitor Dependencies
+psutil==5.9.6
+
+# Optional development dependencies
+# matplotlib==3.8.0  # For advanced charts (optional)
+# pandas==2.1.3     # For data analysis (optional)
