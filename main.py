@@ -34,21 +34,21 @@ class SystemMonitorApp:
         metrics = self.monitor.check_system()
         services_status = self.service_monitor.check_all_services()
         
-        print(f"📊 Metrics - CPU: {metrics['cpu']:.1f}%, Mem: {metrics['memory']:.1f}%, Disk: {metrics['disk']:.1f}%")
+        print(f"Metrics :\n   CPU: {metrics['cpu']:.1f}%, Mem: {metrics['memory']:.1f}%, Disk: {metrics['disk']:.1f}%")
         
         # 2. Display services status
+        print("Services :")
         for service, status in services_status.items():
-            status_icon = "🟢" if status else "🔴"
-            print(f"{status_icon} {service}: {'Running' if status else 'Stopped'}")
+            print(f"   {service}: {'Running' if status else 'Stopped'}")
         
         # 3. Check for alerts
         alerts = self.alert_manager.check_all_alerts(metrics, services_status)
         if alerts:
-            print("🚨 Alerts:")
+            print("Alerts :")
             for alert in alerts:
                 print(f"   {alert}")
         else:
-            print("✅ No alerts")
+            print("No alerts")
         
         # 4. Auto-healing
         healing_actions = []
@@ -63,7 +63,7 @@ class SystemMonitorApp:
             
             # Display healing actions
             if healing_actions:
-                print("🔧 Auto-healing actions:")
+                print("Auto-healing actions :")
                 for action in healing_actions:
                     if isinstance(action, dict):
                         print(f"   {action['message']}")
@@ -87,33 +87,29 @@ class SystemMonitorApp:
     
     def run_continuous(self):
         """Run monitoring continuously"""
-        print("🚀 Starting System Monitor")
-        print(f"⏰ Interval: {self.config['interval']} seconds")
-        print(f"🔧 Auto-healing: {'Enabled' if self.config['auto_heal'] else 'Disabled'}")
-        print(f"📊 Dashboard: http://localhost:{self.config['dashboard_port']}")
+        print("Starting System Monitor")
+        print(f"Interval: {self.config['interval']} seconds")
+        print(f"Auto-healing: {'Enabled' if self.config['auto_heal'] else 'Disabled'}")
+        print(f"Dashboard: http://localhost:{self.config['dashboard_port']}")
         print("=" * 50)
-        
-        # Start dashboard server
+
         self.dashboard.start_in_background()
-        
-        # Wait for server to start
+
         time.sleep(5)
         
-        # Open browser
         try:
             webbrowser.open(f'http://localhost:{self.config["dashboard_port"]}')
         except:
             pass
         
-        # Run monitoring cycles
         try:
             while True:
                 self.run_monitoring_cycle()
                 time.sleep(self.config['interval'])
         except KeyboardInterrupt:
-            print("\n🛑 Monitor stopped by user")
+            print("\nMonitor stopped by user")
         except Exception as e:
-            print(f"\n❌ Error: {e}")
+            print(f"\nError: {e}")
 
 def main():
     """Main function"""

@@ -159,7 +159,7 @@ class Dashboard:
                 return SimpleHTTPRequestHandler.do_GET(self)
         
         server = HTTPServer(('localhost', self.port), DashboardHandler)
-        print(f"🌐 Dashboard available at: http://localhost:{self.port}")
+        print(f"Dashboard available at: http://localhost:{self.port}")
         print("   Press Ctrl+C to stop")
         server.serve_forever()
     
