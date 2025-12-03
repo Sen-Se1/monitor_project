@@ -511,7 +511,7 @@ class Dashboard:
                     self.path = '/dashboard.html'
                 return SimpleHTTPRequestHandler.do_GET(self)
         
-        server = HTTPServer(('localhost', self.port), DashboardHandler)
+        server = HTTPServer(('0.0.0.0', self.port), DashboardHandler)
         print(f"Dashboard available at: http://localhost:{self.port}")
         print("   Press Ctrl+C to stop")
         server.serve_forever()
